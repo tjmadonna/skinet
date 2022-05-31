@@ -1,3 +1,4 @@
+using System.Reflection;
 using Core.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,4 +12,14 @@ public class StoreContext : DbContext
     }
 
     public DbSet<Product> Products { get; set; } = default!;
+
+    public DbSet<ProductBrand> ProductBrands { get; set; } = default!;
+
+    public DbSet<ProductType> ProductTypes { get; set; } = default!;
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+        modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+    }
 }
