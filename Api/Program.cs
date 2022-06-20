@@ -19,6 +19,16 @@ builder.Services.AddApplicationServices();
 
 builder.Services.AddAutoMapper(typeof(MappingProfiles));
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("CorsPolicy", policy =>
+    {
+        policy.AllowAnyHeader()
+              .AllowAnyMethod()
+              .WithOrigins("https://localhost:4200");
+    });
+});
+
 builder.Services.AddSwaggerDocumentation();
 
 var app = builder.Build();
@@ -56,6 +66,8 @@ app.UseHttpsRedirection();
 app.UseRouting();
 
 app.UseStaticFiles();
+
+app.UseCors("CorsPolicy");
 
 app.UseAuthorization();
 
